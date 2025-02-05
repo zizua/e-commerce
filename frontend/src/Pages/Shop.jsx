@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from '../Components/Hero/Hero'
 import Popular from '../Components/Popular/Popular'
+import Offers from '../Components/Offers/Offers'
 
 const Shop = () => {
   return (
@@ -11,6 +12,9 @@ const Shop = () => {
       {/* 7. create popular folder & files --start */}
       <Popular />
       {/* 7. create popular folder & files --end */}
+      {/* 8. create offers folder & files --start */}
+      <Offers />
+      {/* 8. create offers folder & files --end */}
     </div>
   )
 }
