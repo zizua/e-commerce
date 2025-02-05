@@ -3,6 +3,7 @@ import Hero from '../Components/Hero/Hero'
 import Popular from '../Components/Popular/Popular'
 import Offers from '../Components/Offers/Offers'
 import NewCollections from '../Components/NewCollections/NewCollections'
+import NewsLetter from '../Components/NewsLetter/NewsLetter'
 
 const Shop = () => {
   return (
@@ -19,6 +20,9 @@ const Shop = () => {
       {/* 9. create new collections folder & files --start */}
       <NewCollections />
       {/* 9. create new collections folder & files --end */}
+      {/* 10. create newsletter folder & files --start */}
+      <NewsLetter />
+      {/* 10. create newsletter folder & files --end */}
     </div>
   )
 }
