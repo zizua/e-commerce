@@ -6,28 +6,32 @@ import ShopCategory from './Pages/ShopCategory';
 import Product from './Pages/Product';
 import Cart from './Pages/Cart';
 import LoginSignup from './Pages/LoginSignup';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
     <div>
       {/* 3. setup routes --start */}
       <BrowserRouter>
-      {/* 1. setup navbar --start */}
-      <Navbar />
-      {/* 1. setup navbar --end */}
-      <Routes>
-        <Route path='/' element={<Shop/>}/>
-        <Route path='/mens' element={<ShopCategory category="men"/>}/>
-        <Route path='/womens' element={<ShopCategory category="women"/>}/>
-        <Route path='/kids' element={<ShopCategory category="kids"/>}/>
-        <Route path='/product' element={<Product/>}>
-          <Route path=':productId' element={<Product/>}/>
-        </Route>
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/login' element={<LoginSignup/>}/>
-      </Routes>
+        {/* 1. setup navbar --start */}
+        <Navbar />
+        {/* 1. setup navbar --end */}
+        <Routes>
+          <Route path="/" element={<Shop />} />
+          <Route path="/mens" element={<ShopCategory category="men" />} />
+          <Route path="/womens" element={<ShopCategory category="women" />} />
+          <Route path="/kids" element={<ShopCategory category="kids" />} />
+          <Route path="/product" element={<Product />}>
+            <Route path=":productId" element={<Product />} />
+          </Route>
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<LoginSignup />} />
+        </Routes>
+        {/* 3. setup routes --end */}
+        {/* 11. setup footer --start */}
+        <Footer />
+        {/* 11. setup footer --end */}
       </BrowserRouter>
-      {/* 3. setup routes --end */}
     </div>
   );
 }
