@@ -6,8 +6,11 @@ const Item = (props) => {
   return (
     <div className='item'>
         {/* 16. give link for all product to product page --start */}
-        <Link to={`/product/${props.id}`}><img src={props.image} alt={props.name} /></Link> 
+        {/* <Link to={`/product/${props.id}`}><img src={props.image} alt={props.name} /></Link> */}
         {/* 16. give link for all product to product page --end */}
+        {/* 21. give scroll for product related selected --start */}
+        <Link to={`/product/${props.id}`}><img onClick={window.scrollTo(0,0)} src={props.image} alt={props.name} /></Link>
+        {/* 21. give scroll for product related selected --end */}
         {/* <img src={props.image} alt={props.name} /> */}
         <p>{props.name}</p>
         <div className="item-prices">
