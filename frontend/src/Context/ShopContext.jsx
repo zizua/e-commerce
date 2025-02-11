@@ -13,6 +13,7 @@ const getDefaultCart = () => {
 }
 
 {/* 13. setup context provider --start */}
+
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState(getDefaultCart());
     // const contextValue = {all_product, cartItems};
@@ -29,17 +30,52 @@ const ShopContextProvider = (props) => {
     {/* 23. create another useState --start */}
     // const [cartItems, setCartItems] = useState(getDefaultCart());
     {/* 23. create another useState --end */}
+
     {/* 22. create logic for the cart button --end */}
     
     {/* 24. create add to cart & remove from cart function --start */}
     const addToCart = (itemId) => {
         setCartItems ((prev) => ({...prev,[itemId]:prev[itemId]+1}));
-        console.log(cartItems);
+        // console.log(cartItems);
     }
+    
     const removeFromCart = (itemId) => {
         setCartItems ((prev) => ({...prev,[itemId]:prev[itemId]-1}));
     }
-    const contextValue = {all_product, cartItems, addToCart, removeFromCart};
+
+    {/* 25. create logic of total amount in cart --start */}
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for (const item in cartItems)
+        {
+            if (cartItems[item]>0)
+            {
+                let itemInfo = all_product.find(product => product.id === Number(item))
+                totalAmount += itemInfo.new_price * cartItems[item];
+            }
+        }
+        return totalAmount;
+    }
+    {/* 25. create logic of total amount in cart --end */}
+
+    {/* 26. create logic of total amount in cart navbar --start */}
+    const getTotalCartItems = () => {
+        let totalItem = 0;
+        for (const item in cartItems)
+        {
+            if (cartItems[item]>0)
+            {
+                totalItem += cartItems[item];
+            }
+        }
+        return totalItem;
+    }
+    {/* 26. create logic of total amount in cart navbar --end */}
+
+    const contextValue = {getTotalCartItems, getTotalCartAmount , all_product, cartItems, addToCart, removeFromCart};
+    // const contextValue = {getTotalCartAmount , all_product, cartItems, addToCart, removeFromCart};
+    // const contextValue = {all_product, cartItems, addToCart, removeFromCart};
+
     {/* 24. create add to cart function --end */}
 
     return (
