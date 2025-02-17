@@ -1,1 +1,1 @@
-my 
+my e-commerce project
