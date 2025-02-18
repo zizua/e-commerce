@@ -126,6 +126,19 @@ app.post('/addproduct', async (req,res) => {
 });
 // --5end
 
+// Creating API for Deleting Product --6start
+app.post('/removeproduct', async (req, res) => {
+    await Product.findOneAndDelete({id:req.body.id});
+    console.log("Removed");
+    res.json({
+        success:true,
+        name:req.body.name,
+    })
+    
+})
+// --6end
+
+
 // 2a
 // Menjalankan Server
 app.listen(port, (error) => {
