@@ -51,7 +51,7 @@ app.post("/upload", upload.single('product'), (req, res)=> {
 })
 // --4end
 
-// Schema for Creating Products --5start
+// Schema for Creating Products (Create & Add Product) --5start
 // 5a
 const Product = mongoose.model("Product", {
     id:{
@@ -138,6 +138,14 @@ app.post('/removeproduct', async (req, res) => {
 })
 // --6end
 
+// Creating API for Getting All Products --7start
+app.get('/allproducts', async (req,res)=> {
+    let products = await Product.find({});
+    console.log("All Products Fetched");
+    res.send(products);
+    
+})
+// --7end
 
 // 2a
 // Menjalankan Server
