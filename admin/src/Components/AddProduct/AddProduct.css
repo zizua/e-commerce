@@ -23,6 +23,7 @@
     border: 1px solid #c3c3c3;
     outline: none;
     color: #7b7b7b;
+    background: white;
     font-family: 'Poppins';
     font-size: 14px;
 }
@@ -38,6 +39,7 @@
     height: 50px;
     font-size: 14px;
     color: #7b7b7b;
+    background: white;
     border: 1px solid #7b7b7b;
     border-radius: 4px;
 }
