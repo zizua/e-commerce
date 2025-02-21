@@ -7,7 +7,7 @@ const AddProduct = () => {
   // 1a State for Displaying Uploaded Image before Add to List Product --start
   const [image, setImage] = useState(false);
   // 1c State for Adding Product to Database --start
-  const [productDetails, serProductDetails] = useState({
+  const [productDetails, setProductDetails] = useState({
     name: '',
     image: '',
     category: 'women',
@@ -19,9 +19,49 @@ const AddProduct = () => {
   };
   // 1a State for Displaying Uploaded Image before Add to List Product --end
   const changeHandler = (e) => {
-    setProductDetails({...productDetail,[e.target.name]:e.target.value})
+    setProductDetails({...productDetails,[e.target.name]:e.target.value})
   }
   // 1c State for Adding Product to Database --end
+  // 1d Function for Add Product Button --start
+  const Add_Product = async () => {
+    console.log(productDetails);
+    // 1e Add Product to Database --start
+    // create new variable for response data & copy productDetails to product
+    let responseData;
+    let product = productDetails;
+    
+    // create form data
+    let formData = new FormData();
+    formData.append('product',image);
+
+    // create API to fetch data to server
+    await fetch('http://localhost:4000/upload',{
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+      body: formData
+    }).then((resp) => resp.json().then((data) => responseData = data)); // get response data from server
+    
+    // check if response data success
+    if(responseData.success)
+    {
+      product.image = responseData.image_url; // set image url to product.image
+      console.log(product); // show product data on console
+      await fetch('http://localhost:4000/addproduct', { // fetch data to server
+        method: 'POST', 
+        headers:  
+        {
+          Accept: 'application/json', 
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(product), // send product data to server
+      }).then((resp) => resp.json()).then((data) => { // get response data from server
+        data.success?alert("Product Added"):alert("Failed"); // check if response data success or failed
+      })
+    }
+    // 1e Add Product to Database --end
+  }
 
   return (
     <div className="add-product">
@@ -61,7 +101,7 @@ const AddProduct = () => {
         {/* <input type="file" name="image" id="file-input" hidden /> */}
         <input onChange={imageHandler} type="file" name="image" id="file-input" hidden />
       </div>
-      <button className="addproduct-btn">ADD</button>
+      <button onClick={() => {Add_Product()}} className="addproduct-btn">ADD</button>
     </div>
   );
 };
