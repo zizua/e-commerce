@@ -97,10 +97,10 @@ app.post('/addproduct', async (req,res) => {
     if (products.length>0){
         let last_product_array = products.slice(-1); // Mengambil produk terakhir dari array
         let last_product = last_product_array[0]; // Mengambil elemen pertama dari array yang berisi produk terakhir
-        id = last_product.id+1; // Menentukan ID baru berdasarkan produk terakhir
+        id = last_product.id + 1; // Menentukan ID baru berdasarkan produk terakhir
     } 
     else{
-        id:1; // Jika tidak ada produk, mulai dari ID 1
+        id = 1; // Jika tidak ada produk, mulai dari ID 1
     }
 
     // 5b
@@ -122,7 +122,7 @@ app.post('/addproduct', async (req,res) => {
     res.json({
         success:true,
         name:req.body.name,
-    })
+    });
 });
 // --5end
 
