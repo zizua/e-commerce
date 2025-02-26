@@ -147,6 +147,59 @@ app.get('/allproducts', async (req,res)=> {
 })
 // --7end
 
+// Schema Creating for User Model --8start
+// 8a 
+const Users = mongoose.model('Users', {
+    name:{
+        type:String,
+    }, 
+    email:{
+        type:String,
+        unique:true,
+    }, 
+    password:{
+        type:String,
+    },
+    cartData:{
+        type:Object,
+    },
+    date:{
+        type:Date,
+        default:Date.now,
+    }
+})
+
+// 8b
+// Creating Endpoint for User Registration
+app.post('/signup', async (req, res) => {
+    let check = await Users.findOne({email:req.body.email}) // Mencari apakah email sudah terdaftar
+    if (check) {
+        return res.status(400).json({success:false, errors:"existing user found with email address"}) // Mengirim respons jika email sudah terdaftar
+    } 
+    let cart = {}; // Membuat objek keranjang kosong
+        for (let i = 0; i < 300; i++) {
+            cart[i] = 0; // Menambahkan produk ke keranjang dengan jumlah 0
+        }
+        const user = new Users({ // Membuat objek pengguna baru
+            name:req.body.name,
+            email:req.body.email,
+            password:req.body.password,
+            cartData:cart,
+        })
+        await user.save(); // Menyimpan data pengguna baru ke database
+        console.log("User Registered");
+
+        const data = { // Membuat objek data untuk token JWT
+            user: {
+                id:user.id,
+            }
+        }
+
+        const token = jwt.sign(data, 'secret_ecom'); // Membuat token JWT
+        res.json({success:true, token}); // Mengirim token JWT sebagai
+})
+// Schema Creating for User Model --8end
+
 // 2a
 // Menjalankan Server
 app.listen(port, (error) => {
