@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
 import './CSS/LoginSignup.css';
 
-const LoginSignup = () => {
+// create login and signup component #1a
+const LoginSignup = () => { 
 
-  // create state for login and signup 
+  // create state for login and signup #2
   const [state, setState] = useState("Login"); // default state is login
 
+  // create end point for login and signup #3
+  const login = async () => {
+    console.log("Login Function Executed");
+    
+  }
+  
+  const signup = async () => {
+    console.log("Signup Function Executed");
+
+  }
+
+  // create login and signup component #1b
   return (
     <div className="loginsignup">
       <div className="loginsignup-container">
@@ -17,7 +30,8 @@ const LoginSignup = () => {
           <input type="email" placeholder="Email Address" />
           <input type="password" placeholder="Password" />
         </div>
-        <button>Continue</button>
+        {/* <button>Continue</button> */}
+        <button onClick={()=>{state==="Login"?login():signup()}}>Continue</button>
         {state === "Sign Up"? 
           <p className="loginsignup-login">Already have an account? <span onClick={()=>{setState("Login")}}>Login here</span></p> 
           : <p className="loginsignup-login">Create an account? <span onClick={()=>{setState("Sign Up")}}>Click here</span></p>
