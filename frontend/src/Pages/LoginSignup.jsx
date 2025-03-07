@@ -17,12 +17,30 @@ const LoginSignup = () => {
     setFormData({...formData, [e.target.name]:e.target.value})
   }
 
-  // create end point for login and signup #3
+  // create end point for login and signup #3a
   const login = async () => {
     // console.log("Login Function Executed");
     console.log("Login Function Executed", formData);
+    // create login function #6
+    let responseData;
+    await fetch("http://localhost:4000/login", { 
+      method: "POST", 
+      headers: { 
+        "Content-Type":"application/json", // send data in json format
+      },
+      body: JSON.stringify(formData), // convert data to json
+    }).then((response)=>response.json()).then((data)=>responseData=data); // convert response to json
+
+    if(responseData.success){
+      localStorage.setItem('auth-token', responseData.token); // save token in local storage
+      window.location.replace("/"); // redirect to home page
+    }
+    else {
+      alert(responseData.errors); // show error message
+    }
   }
   
+  // create end point for login and signup #3b
   const signup = async () => {
     // console.log("Signup Function Executed");
     console.log("Signup Function Executed", formData);
