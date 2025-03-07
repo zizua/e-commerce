@@ -202,25 +202,33 @@ app.post('/signup', async (req, res) => {
 
 // Creating endpoint for User Login --9start
 app.post('/login', async (req, res) => {
-    let user = await Users.findOne({email:req.body.email});
+    let user = await Users.findOne({email:req.body.email}); // Mencari pengguna berdasarkan email
     if (user) {
-        const passCompare = req.body.password === user.password;     
+        const passCompare = req.body.password === user.password; // Membandingkan kata sandi yang diberikan dengan kata sandi pengguna
         if (passCompare) {
-            const data = {
+            const data = { // Membuat objek data untuk token JWT
                 user:{
                     id:user.id
                 }
             }
-            const token = jwt.sign(data, 'secret_ecom');
+            const token = jwt.sign(data, 'secret_ecom'); // Membuat token JWT
             res.json({success:true, token});
         } 
         else {
-            res.json({success:false, errors:"Wrong Password"});
+            res.json({success:false, errors:"Wrong Password"}); 
         }
     }
     else {
-        res.json({success:false, errors:"Wrong Email Id"});
+        res.json({success:false, errors:"Wrong Email Id"}); 
     }
+})
+
+// creating endpoint for newcollections data --10start
+app.get('/newcollections', async (req, res) => { 
+    let products = await Product.find({}); // Mengambil semua produk dari database
+    let newcollection = products.slice(1).slice(-8); // Mengambil 8 produk terakhir dari array produk
+    console.log("New Collection Fetched"); 
+    res.send(newcollection); // Mengirim produk terakhir sebagai respons
 })
 
 // 2a

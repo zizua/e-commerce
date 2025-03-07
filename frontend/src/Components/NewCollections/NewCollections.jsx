@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './NewCollections.css'
-import new_collections from '../Assets/new_collections'
+// import new_collections from '../Assets/new_collections'
 import Item from '../Item/Item'
 
+
+// create a functional component --1a
 const NewCollections = () => {
+  // create state for new collections --2
+  const [new_collections, setNew_Collections] = useState([]);
+  // create endpoint for new collections --3
+  useEffect(() => {
+    fetch("http://localhost:4000/newcollections")
+    .then((response)=>response.json()) // Mengubah response dari URL API menjadi JSON
+    .then((data)=>setNew_Collections(data)); // Mengubah data JSON menjadi array dan menyimpannya di state
+  }, [])
+  
+// 1b
   return (
     <div className='new-collections'>
         <h1>NEW COLLECTIONS</h1>
