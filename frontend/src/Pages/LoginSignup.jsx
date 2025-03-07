@@ -6,7 +6,7 @@ const LoginSignup = () => {
 
   // create state for login and signup #2
   const [state, setState] = useState("Login"); // default state is login
-  // create state for form data #4
+  // create state & handler for form data #4
   const [formData, setFormData] = useState({
     username:"",
     password:"",
@@ -26,6 +26,23 @@ const LoginSignup = () => {
   const signup = async () => {
     // console.log("Signup Function Executed");
     console.log("Signup Function Executed", formData);
+    // create signup function #5
+    let responseData;
+    await fetch("http://localhost:4000/signup", { 
+      method: "POST", 
+      headers: { 
+        "Content-Type":"application/json", // send data in json format
+      },
+      body: JSON.stringify(formData), // convert data to json
+    }).then((response)=>response.json()).then((data)=>responseData=data); // convert response to json
+
+    if(responseData.success){
+      localStorage.setItem('auth-token', responseData.token); // save token in local storage
+      window.location.replace("/"); // redirect to home page
+    }
+    else {
+      alert(responseData.errors); // show error message
+    }
   }
 
   // create login and signup component #1b
