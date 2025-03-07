@@ -198,7 +198,7 @@ app.post('/signup', async (req, res) => {
         const token = jwt.sign(data, 'secret_ecom'); // Membuat token JWT
         res.json({success:true, token}); // Mengirim token JWT sebagai
 })
-// Schema Creating for User Model --8end
+// --8end
 
 // Creating endpoint for User Login --9start
 app.post('/login', async (req, res) => {
@@ -222,6 +222,7 @@ app.post('/login', async (req, res) => {
         res.json({success:false, errors:"Wrong Email Id"}); 
     }
 })
+// --9end
 
 // creating endpoint for newcollections data --10start
 app.get('/newcollections', async (req, res) => { 
@@ -229,6 +230,16 @@ app.get('/newcollections', async (req, res) => {
     let newcollection = products.slice(1).slice(-8); // Mengambil 8 produk terakhir dari array produk
     console.log("New Collection Fetched"); 
     res.send(newcollection); // Mengirim produk terakhir sebagai respons
+})
+// --10end
+
+// creating endpoint for popular in women data --11start
+app.get('/popularinwomen', async (req, res) => {
+    let products = await Product.find({category:"women"}); // Mengambil semua produk dari database dengan kategori wanita
+    let popular_in_women = products.slice(0, 4); // Mengambil 4 produk pertama dari array produk
+    console.log("Popular in Women Fetched");
+    res.send(popular_in_women); // Mengirim 4 produk pertama sebagai respons
+
 })
 
 // 2a
