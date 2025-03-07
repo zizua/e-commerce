@@ -1,12 +1,13 @@
-import react, { createContext, useState } from 'react';
-import all_product from '../Components/Assets/all_product';
+import react, { createContext, useEffect, useState } from 'react';
+// import all_product from '../Components/Assets/all_product';
 
 
 {/* 12. setup api context --start */}
 export const ShopContext = createContext(null);
 const getDefaultCart = () => {
     let cart = {};
-    for (let index = 0; index < all_product.length+1; index++) {
+    // for (let index = 0; index < all_product.length+1; index++) {
+    for (let index = 0; index < 300+1; index++) {
         cart[index] = 0;
     }
     return cart;
@@ -15,8 +16,17 @@ const getDefaultCart = () => {
 {/* 13. setup context provider --start */}
 
 const ShopContextProvider = (props) => {
+    const [all_product, setAll_Product] = useState([]); // 36. add all product data using all product API
+
     const [cartItems, setCartItems] = useState(getDefaultCart());
     // const contextValue = {all_product, cartItems};
+
+    useEffect(() => { // 37. fetch all product data using all product API
+        fetch("http://localhost:4000/allproducts")
+            .then((response) => response.json())
+            .then((data) => setAll_Product(data))
+            .catch((error) => console.error("Error fetching products:", error));
+    }, []);
 
     {/* 22. create logic for the cart button --start */}
     // const getDefaultCart = () => {
