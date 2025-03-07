@@ -51,10 +51,15 @@ const Navbar = () => {
         <button>Login</button>
         <img src={cart_icon} alt="" /> 
         */}
+
+        {/* 36. create logout button for signed user */}
+        {localStorage.getItem('auth-token')
+        ?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace("/")}}>Logout</button>
+        :<Link to='/login'><button>Login</button></Link>}
         
         {/* 5. setup navigation menu with route 2 (link route from app.js) --start  */}
-        <Link to='/login'><button>Login</button></Link> 
         <Link to='/cart'><img src={cart_icon} alt="" /></Link> 
+        {/* <Link to='/login'><button>Login</button></Link>  */}
         {/* 5. setup navigation menu with route 2 (link route from app.js) --end  */}
         <div className="nav-cart-count">{getTotalCartItems()}</div>
       </div>
