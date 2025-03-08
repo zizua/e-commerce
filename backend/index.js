@@ -260,7 +260,7 @@ app.get('/popularinwomen', async (req, res) => {
         }
     } 
 
-// creating endpoint for adding product to cart data --12start
+// creating endpoint for adding product to cartdata --12start
 // 12a
 // app.post('/addtocart', async (req, res) => {
 //     console.log(req.body);
@@ -268,7 +268,11 @@ app.get('/popularinwomen', async (req, res) => {
 
 // 12b
 app.post('/addtocart', fetchUser, async (req, res) => {
-    console.log(req.body,req.user);
+    // console.log(req.body,req.user);
+    let userData = await Users.findOne({_id:req.user.id}); // Mengambil data pengguna berdasarkan ID pengguna
+    userData.cartData[req.body.itemId] += 1; // Menambahkan jumlah produk ke keranjang pengguna
+    await Users.findOneAndUpdate({_id:req.user.id}, {cartData:userData.cartData}); // Menyimpan data pengguna yang diperbarui ke database
+    res.send("Added"); // Mengirim respons
 })
 // --12end
 
