@@ -7,7 +7,7 @@ export const ShopContext = createContext(null);
 const getDefaultCart = () => {
     let cart = {};
     // for (let index = 0; index < all_product.length+1; index++) {
-    for (let index = 0; index < 300+1; index++) {
+    for (let index = 0; index < 300+1; index++) { // change all product to 300
         cart[index] = 0;
     }
     return cart;
@@ -44,9 +44,24 @@ const ShopContextProvider = (props) => {
     {/* 22. create logic for the cart button --end */}
     
     {/* 24. create add to cart & remove from cart function --start */}
+    // 24a
     const addToCart = (itemId) => {
         setCartItems ((prev) => ({...prev,[itemId]:prev[itemId]+1}));
         // console.log(cartItems);
+        // 24b
+        if (localStorage.getItem('auth-token')) {
+            fetch('http://localhost:4000/addtocart', {
+                method: "POST",
+                headers: {
+                    Accept: "application/form-data",
+                    "auth-tokrn": localStorage.getItem('auth-token'),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({itemId:itemId}),
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data));
+        }
     }
     
     const removeFromCart = (itemId) => {

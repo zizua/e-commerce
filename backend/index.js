@@ -177,7 +177,7 @@ app.post('/signup', async (req, res) => {
         return res.status(400).json({success:false, errors:"existing user found with email address"}) // Mengirim respons jika email sudah terdaftar
     } 
     let cart = {}; // Membuat objek keranjang kosong
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 300; i++) { // Menginisialisasi keranjang dengan 300 produk, masing-masing dengan jumlah 0.
             cart[i] = 0; // Menambahkan produk ke keranjang dengan jumlah 0
         }
         const user = new Users({ // Membuat objek pengguna baru
@@ -240,6 +240,12 @@ app.get('/popularinwomen', async (req, res) => {
     console.log("Popular in Women Fetched");
     res.send(popular_in_women); // Mengirim 4 produk pertama sebagai respons
 
+})
+// --11end
+
+// creating endpoint for adding product to cart data --12start
+app.post('/addtocart', async (req, res) => {
+    console.log(req.body);
 })
 
 // 2a
