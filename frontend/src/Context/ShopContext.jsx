@@ -21,11 +21,26 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState(getDefaultCart());
     // const contextValue = {all_product, cartItems};
 
-    useEffect(() => { // 37. fetch all product data using all product API
+    // 37. fetch all product data using all product API
+    // 37a getting all product data from API to display for non-logged in user
+    useEffect(() => { 
         fetch("http://localhost:4000/allproducts")
             .then((response) => response.json())
             .then((data) => setAll_Product(data))
             .catch((error) => console.error("Error fetching products:", error));
+
+            // 37b getting cartdata from API to display for logged in user
+            if(localStorage.getItem('auth-token')) {
+                fetch('http://localhost:4000/getcart', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/form-data',
+                        'auth-token': `${localStorage.getItem('auth-token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: "",
+                }) .then((response)=>response.json()) .then((data)=>setCartItems(data));
+            }
     }, []);
 
     {/* 22. create logic for the cart button --start */}
