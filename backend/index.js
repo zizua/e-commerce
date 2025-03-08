@@ -260,7 +260,7 @@ app.get('/popularinwomen', async (req, res) => {
         }
     } 
 
-// creating endpoint for adding product to cartdata --12start
+// creating endpoint for adding product to cartdata and database --12start
 // 12a
 // app.post('/addtocart', async (req, res) => {
 //     console.log(req.body);
@@ -269,12 +269,23 @@ app.get('/popularinwomen', async (req, res) => {
 // 12b
 app.post('/addtocart', fetchUser, async (req, res) => {
     // console.log(req.body,req.user);
+    console.log("Added", req.body.itemId);  
     let userData = await Users.findOne({_id:req.user.id}); // Mengambil data pengguna berdasarkan ID pengguna
     userData.cartData[req.body.itemId] += 1; // Menambahkan jumlah produk ke keranjang pengguna
     await Users.findOneAndUpdate({_id:req.user.id}, {cartData:userData.cartData}); // Menyimpan data pengguna yang diperbarui ke database
     res.send("Added"); // Mengirim respons
 })
 // --12end
+
+// creating endpoint for removing product from cartdata and database --14start
+app.post('/removefromcart', fetchUser, async (req, res) => {
+    console.log("Removed", req.body.itemId);    
+    let userData = await Users.findOne({_id:req.user.id}); // Mengambil data pengguna berdasarkan ID pengguna
+    if(userData.cartData[req.body.itemId] > 0); // Memastikan bahwa jumlah produk yang akan dihapus lebih besar
+    userData.cartData[req.body.itemId] -= 1; // Mengurangi jumlah produk dari keranjang pengguna
+    await Users.findOneAndUpdate({_id:req.user.id}, {cartData:userData.cartData}); // Menyimpan data pengguna yang diperbarui ke database
+    res.send("Removed"); // Mengirim respons
+})
 
 // 2a
 // Menjalankan Server
