@@ -243,10 +243,34 @@ app.get('/popularinwomen', async (req, res) => {
 })
 // --11end
 
+// creating middleware to fetch user data --13start
+    const fetchUser = async (req, res, next) => {
+        const token = req.header('auth-token'); // Mengambil token dari header
+        if (!token) {
+            res.status(401).send({errors: "Please authenticate using valid token!"}); // Mengirim respons jika token tidak ada}
+        }
+        else {
+            try {
+                const data = jwt.verify(token, 'secret_ecom'); // Memverifikasi token
+                req.user = data.user; // Menyimpan data pengguna dalam objek permintaan
+                next(); // Melanjutkan eksekusi
+            } catch (error) {
+                res.status(401).send({errors: "Please authenticate using valid token!"}); // Mengirim respons jika token tidak valid
+            }
+        }
+    } 
+
 // creating endpoint for adding product to cart data --12start
-app.post('/addtocart', async (req, res) => {
-    console.log(req.body);
+// 12a
+// app.post('/addtocart', async (req, res) => {
+//     console.log(req.body);
+// })
+
+// 12b
+app.post('/addtocart', fetchUser, async (req, res) => {
+    console.log(req.body,req.user);
 })
+// --12end
 
 // 2a
 // Menjalankan Server
