@@ -10,6 +10,9 @@ import Footer from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png'
 import women_banner from './Components/Assets/banner_women.png'
 import kid_banner from './Components/Assets/banner_kids.png'
+import { disableReactDevTools} from '@fvilers/disable-react-devtools'
+
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
 function App() {
   return (
